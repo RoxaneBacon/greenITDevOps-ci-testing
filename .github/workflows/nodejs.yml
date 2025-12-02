@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - '*'
+
   pull_request:
     branches: [master]
 
@@ -28,11 +29,22 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      
+    test_integration:
+      needs: build
+      runs-on: ubuntu-latest
+
+      if: |
+        contains(join(github.event.head_commit.added, ' '), 'example-application/') ||
+        contains(join(github.event.head_commit.modified, ' '), 'example-application/') ||
+        contains(join(github.event.head_commit.removed, ' '), 'example-application/')
 
       - run: npm i
       - run: npm test
       - run: npm run test:nestjs
+      
   build2:
+    
     runs-on: ubuntu-latest
 
     steps:

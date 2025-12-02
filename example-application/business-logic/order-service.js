@@ -11,7 +11,7 @@ const axiosHTTPClient = axios.create({});
 
 module.exports.addOrder = async function (newOrder) {
   // validation
-  if (!newOrder.productId) {
+  if (!newOrder.productId ) {
     throw new AppError('invalid-order', `No product-id specified`, 400);
   }
 
