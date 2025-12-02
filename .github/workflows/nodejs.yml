@@ -46,7 +46,7 @@ jobs:
 
 
   test_nestjs:
-    needs: build
+    needs: test_integration
     runs-on: ubuntu-latest
 
     if: |
